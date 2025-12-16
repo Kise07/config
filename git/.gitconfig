@@ -1,0 +1,79 @@
+[user]
+	name = kise
+	email = kaiazmi1412@gmail.com
+
+# ---------------- Git core behavior ----------------
+[core]
+  editor = nvim
+  excludesfile = ~/.gitignore
+  ignorecase = false
+
+# ---------------- Push safety ----------------
+[push]
+  default = simple
+
+# ---------------- Colors ----------------
+[color]
+  ui = auto
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+  grep = auto
+
+# ---------------- Aliases (fzf-based) ----------------
+[alias]
+  st = status
+  d  = diff
+  co = checkout
+  ci = commit
+  ca = commit -a
+  cz = czg
+  br = branch
+  ba = branch -a
+  bm = branch --merged
+  bn = branch --no-merged
+
+  a  = "!git status --short | fzf --multi | awk '{print $2}' | xargs git add"
+  ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+  pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
+
+  hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+  llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
+
+  df   = "!git hist | fzf | awk '{print $2}' | xargs -I {} git diff {}^ {}"
+  find = "!f() { git log --pretty=format:\"%h %cd [%cn] %s%d\" --date=relative -S\"$@\" | fzf | awk '{print $1}' | xargs -I {} git diff {}^ {}; }; f"
+
+  open = "!hub browse"
+
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u; }; nvim `f`"
+  add-unmerged  = "!f() { git ls-files --unmerged | cut -f2 | sort -u; }; git add `f`"
+
+# ---------------- GitHub / hub ----------------
+[hub]
+  protocol = https
+
+[github]
+  user = Kise07
+
+# ---------------- Neovim diff / merge ----------------
+[diff]
+  tool = nvimdiff
+
+[difftool "nvimdiff"]
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "nvimdiff"]
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+
+# ---------------- Git LFS ----------------
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+# ---------------- ghq ----------------
+[ghq]
+  root = ~/.ghq
