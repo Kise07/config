@@ -182,3 +182,6 @@ alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time
 # Created by `pipx` on 2025-12-09 09:18:15
 export PATH="$PATH:/Users/kise/.local/bin"
 . "/Users/kise/.deno/env"
+
+# ----Zoxide (better cd)----
+eval "$(zoxide init zsh)"
