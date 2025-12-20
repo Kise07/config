@@ -121,6 +121,7 @@ alias la="ls -A"               # List all files, including hidden
 alias ll="ls -l"               # Long format
 alias lla="ll -A"              # Long format with all files
 alias g="git"                  # Short alias for Git
+alias cd="z"                   # Short alias for zoxide
 
 ## directory aliases
 alias c="cd Desktop/learning"
