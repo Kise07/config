@@ -1,8 +1,2 @@
-# ================================
-# Bash config
-# ================================
-
-# Load shared config
-[ -f "$HOME/.shell-common" ] && source "$HOME/.shell-common"
-[ -f "$HOME/.fzf-common" ] && source "$HOME/.fzf-common"
-
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "/Users/kise/.deno/env"
