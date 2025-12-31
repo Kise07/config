@@ -121,9 +121,7 @@ alias la="ls -A"               # List all files, including hidden
 alias ll="ls -l"               # Long format
 alias lla="ll -A"              # Long format with all files
 alias g="git"                  # Short alias for Git
-
-## directory aliases
-alias c="cd Desktop/learning"
+alias cd="z"                   # Cd replacement with zoxide
 
 # --- FZF ---
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
