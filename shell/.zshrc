@@ -1,3 +1,10 @@
+# macOS-specific shell configuration
+# This branch is optimized for macOS systems
+
+# --- macOS Homebrew Paths ---
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
