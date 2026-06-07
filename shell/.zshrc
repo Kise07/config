@@ -1,3 +1,14 @@
+# Linux-specific shell configuration
+# This branch is optimized for Linux systems
+
+# --- Linux Homebrew Paths (if using Linuxbrew) ---
+# Uncomment if you use Linuxbrew on Linux
+# export PATH="$HOME/.linuxbrew/bin:$PATH"
+# export PATH="$HOME/.linuxbrew/sbin:$PATH"
+
+# --- Standard Linux paths ---
+export PATH="$HOME/.local/bin:$PATH"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
