@@ -89,16 +89,18 @@ return {
 	-- filename
 	{
 		"b0o/incline.nvim",
-		dependencies = { "catppuccin" }, -- ← CHANGE THIS
+		dependencies = { "catppuccin", "craftzdog/solarized-osaka.nvim" },
 		event = "BufReadPre",
 		priority = 1200,
 		config = function()
-			local colors = require("catppuccin.palettes").get_palette("mocha") -- ← CHANGE THIS
+			local color_util = require("util.colors")
+			local colors = color_util.get_incline_colors()
+
 			require("incline").setup({
 				highlight = {
 					groups = {
-						InclineNormal = { guibg = colors.mauve, guifg = colors.crust },
-						InclineNormalNC = { guifg = colors.lavender, guibg = colors.mantle },
+						InclineNormal = { guibg = colors.bg, guifg = colors.fg },
+						InclineNormalNC = { guifg = colors.fg_nc, guibg = colors.bg_nc },
 					},
 				},
 				window = { margin = { vertical = 0, horizontal = 1 } },
