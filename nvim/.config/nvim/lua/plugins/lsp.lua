@@ -24,13 +24,11 @@ return {
 			---@type lspconfig.options
 			servers = {
 				cssls = {},
-
 				tailwindcss = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
 				},
-
 				tsserver = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
@@ -61,9 +59,7 @@ return {
 						},
 					},
 				},
-
 				html = {},
-
 				yamlls = {
 					settings = {
 						yaml = {
@@ -71,7 +67,6 @@ return {
 						},
 					},
 				},
-
 				lua_ls = {
 					-- enabled = false,
 					single_file_support = true,
@@ -105,6 +100,7 @@ return {
 							},
 							diagnostics = {
 								disable = { "incomplete-signature-doc", "trailing-space" },
+								-- enable = false,
 								groupSeverity = {
 									strong = "Warning",
 									strict = "Warning",
@@ -136,51 +132,25 @@ return {
 						},
 					},
 				},
-
-				-- Generic keymaps for LSPs (new recommended place for keymaps)
-				["*"] = {
-					keys = {
-						{
-							"gd",
-							function()
-								require("telescope.builtin").lsp_definitions({ reuse_win = false })
-							end,
-							mode = "n",
-							desc = "Goto Definition",
-							has = "definition",
-						},
-						{
-							"gr",
-							"<cmd>Telescope lsp_references<CR>",
-							mode = "n",
-							desc = "References",
-							has = "references",
-						},
-						{
-							"K",
-							"<cmd>lua vim.lsp.buf.hover()<CR>",
-							mode = "n",
-							desc = "Hover",
-							has = "hover",
-						},
-						{
-							"<leader>rn",
-							"<cmd>lua vim.lsp.buf.rename()<CR>",
-							mode = "n",
-							desc = "Rename",
-							has = "rename",
-						},
-						{
-							"<leader>ca",
-							"<cmd>lua vim.lsp.buf.code_action()<CR>",
-							mode = "n",
-							desc = "Code Action",
-							has = "codeAction",
-						},
-					},
-				},
 			},
 			setup = {},
 		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		opts = function()
+			local keys = require("lazyvim.plugins.lsp.keymaps").get()
+			vim.list_extend(keys, {
+				{
+					"gd",
+					function()
+						-- DO NOT RESUSE WINDOW
+						require("telescope.builtin").lsp_definitions({ reuse_win = false })
+					end,
+					desc = "Goto Definition",
+					has = "definition",
+				},
+			})
+		end,
 	},
 }
