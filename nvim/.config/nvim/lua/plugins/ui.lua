@@ -93,43 +93,61 @@ return {
 		event = "BufReadPre",
 		priority = 1200,
 		config = function()
-			local colorscheme = vim.g.colors_name or "catppuccin"
-			local colors_normal, colors_nc
+			local function setup_incline_colors()
+				local colorscheme = vim.g.colors_name or "catppuccin"
+				local colors_normal, colors_nc
 
-			if colorscheme == "solarized-osaka" then
-				local colors = require("solarized-osaka.colors").setup()
-				colors_normal = { guibg = colors.magenta500, guifg = colors.base04 }
-				colors_nc = { guifg = colors.violet500, guibg = colors.base03 }
-			else
-				-- catppuccin
-				local colors = require("catppuccin.palettes").get_palette("mocha")
-				colors_normal = { guibg = colors.mauve, guifg = colors.crust }
-				colors_nc = { guifg = colors.lavender, guibg = colors.mantle }
+				if colorscheme == "solarized-osaka" then
+					local colors = require("solarized-osaka.colors").setup()
+					colors_normal = { guibg = colors.magenta500, guifg = colors.base04 }
+					colors_nc = { guifg = colors.violet500, guibg = colors.base03 }
+				else
+					local colors = require("catppuccin.palettes").get_palette("mocha")
+					colors_normal = { guibg = colors.mauve, guifg = colors.crust }
+					colors_nc = { guifg = colors.lavender, guibg = colors.mantle }
+				end
+
+				require("incline").setup({
+					highlight = {
+						groups = {
+							InclineNormal = colors_normal,
+							InclineNormalNC = colors_nc,
+						},
+					},
+					window = { margin = { vertical = 0, horizontal = 1 } },
+					hide = {
+						cursorline = true,
+						only_win = function(win)
+							-- Hide in zen mode
+							if vim.t.zen_mode then
+								return true
+							end
+							return false
+						end,
+					},
+					render = function(props)
+						local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+						if vim.bo[props.buf].modified then
+							filename = "[+] " .. filename
+						end
+
+						local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+						return { { icon, guifg = color }, { " " }, { filename } }
+					end,
+				})
 			end
 
-			require("incline").setup({
-				highlight = {
-					groups = {
-						InclineNormal = colors_normal,
-						InclineNormalNC = colors_nc,
-					},
-				},
-				window = { margin = { vertical = 0, horizontal = 1 } },
-				hide = {
-					cursorline = true,
-				},
-				render = function(props)
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-					if vim.bo[props.buf].modified then
-						filename = "[+] " .. filename
-					end
+			vim.api.nvim_create_autocmd("VimEnter", {
+				callback = setup_incline_colors,
+				once = true,
+			})
 
-					local icon, color = require("nvim-web-devicons").get_icon_color(filename)
-					return { { icon, guifg = color }, { " " }, { filename } }
-				end,
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				callback = setup_incline_colors,
 			})
 		end,
 	},
+
 	-- statusline
 	{
 		"nvim-lualine/lualine.nvim",
