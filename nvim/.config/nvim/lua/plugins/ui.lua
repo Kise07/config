@@ -79,7 +79,7 @@ return {
 		opts = {
 			options = {
 				mode = "tabs",
-				-- separator_style = "slant",
+				separator_style = "slant",
 				show_buffer_close_icons = false,
 				show_close_icon = false,
 			},
@@ -89,21 +89,29 @@ return {
 	-- filename
 	{
 		"b0o/incline.nvim",
-		dependencies = { "craftzdog/solarized-osaka.nvim" },
+		dependencies = { "catppuccin" }, -- ← CHANGE THIS
 		event = "BufReadPre",
 		priority = 1200,
 		config = function()
-			local colors = require("solarized-osaka.colors").setup()
+			local colors = require("catppuccin.palettes").get_palette("mocha") -- ← CHANGE THIS
 			require("incline").setup({
 				highlight = {
 					groups = {
-						InclineNormal = { guibg = colors.magenta500, guifg = colors.base04 },
-						InclineNormalNC = { guifg = colors.violet500, guibg = colors.base03 },
+						InclineNormal = { guibg = colors.mauve, guifg = colors.crust },
+						InclineNormalNC = { guifg = colors.lavender, guibg = colors.mantle },
 					},
 				},
 				window = { margin = { vertical = 0, horizontal = 1 } },
 				hide = {
 					cursorline = true,
+					only_win = function(win)
+						local buf = vim.api.nvim_win_get_buf(win)
+						local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+						if buftype == "nofile" then
+							return true
+						end
+						return vim.t.zen_mode
+					end,
 				},
 				render = function(props)
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
