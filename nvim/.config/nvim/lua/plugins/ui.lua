@@ -89,31 +89,34 @@ return {
 	-- filename
 	{
 		"b0o/incline.nvim",
-		dependencies = { "catppuccin", "craftzdog/solarized-osaka.nvim" },
+		dependencies = { "craftzdog/solarized-osaka.nvim", "catppuccin" },
 		event = "BufReadPre",
 		priority = 1200,
 		config = function()
-			local color_util = require("util.colors")
-			local colors = color_util.get_incline_colors()
+			local colorscheme = vim.g.colors_name or "catppuccin"
+			local colors_normal, colors_nc
+
+			if colorscheme == "solarized-osaka" then
+				local colors = require("solarized-osaka.colors").setup()
+				colors_normal = { guibg = colors.magenta500, guifg = colors.base04 }
+				colors_nc = { guifg = colors.violet500, guibg = colors.base03 }
+			else
+				-- catppuccin
+				local colors = require("catppuccin.palettes").get_palette("mocha")
+				colors_normal = { guibg = colors.mauve, guifg = colors.crust }
+				colors_nc = { guifg = colors.lavender, guibg = colors.mantle }
+			end
 
 			require("incline").setup({
 				highlight = {
 					groups = {
-						InclineNormal = { guibg = colors.bg, guifg = colors.fg },
-						InclineNormalNC = { guifg = colors.fg_nc, guibg = colors.bg_nc },
+						InclineNormal = colors_normal,
+						InclineNormalNC = colors_nc,
 					},
 				},
 				window = { margin = { vertical = 0, horizontal = 1 } },
 				hide = {
 					cursorline = true,
-					only_win = function(win)
-						local buf = vim.api.nvim_win_get_buf(win)
-						local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-						if buftype == "nofile" then
-							return true
-						end
-						return vim.t.zen_mode
-					end,
 				},
 				render = function(props)
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
@@ -127,7 +130,6 @@ return {
 			})
 		end,
 	},
-
 	-- statusline
 	{
 		"nvim-lualine/lualine.nvim",
