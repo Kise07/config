@@ -1,0 +1,38 @@
+{
+  "logo": {
+    "type": "kitty-icat",
+    "source": "/Users/kise/.config/fastfetch/ak.png",
+    "width": 20,
+    "padding": {
+      "top": 1,
+      "left": 3,
+    },
+  },
+  "display": {
+    "color": "blue",
+    "separator": " -> ",
+  },
+  "modules": [
+    "separator",
+    "os",
+    "host",
+    "uptime",
+    "packages",
+    "shell",
+    "display",
+    "wm",
+    "wmtheme",
+    "theme",
+    "font",
+    "terminal",
+    "terminalfont",
+    "cpu",
+    "gpu",
+    "memory",
+    "swap",
+    "disk",
+    "battery",
+    "poweradapter",
+    "break",
+  ],
+}
