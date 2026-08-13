@@ -1,5 +1,4 @@
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
-# Created by `pipx` on 2025-12-09 09:18:15
-export PATH="$PATH:/Users/kise/.local/bin"
+export PATH="/Users/kise/.local/share/solana/install/active_release/bin:$PATH"
