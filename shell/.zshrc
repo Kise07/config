@@ -316,11 +316,8 @@ remaining_days() {
     local RESET='\e[0m'
 
     # <== EDIT YOUR QUOTE HERE ==>
-printf "${ITALIC_CYAN}\t\"Sometimes, Question is not perfection but perception.\"\n"
-    printf "${ITALIC_CYAN}\t\"It's not necessary to be perfect but people need to find it perfect.\"\n"
-    printf "${ITALIC_CYAN}\t\"Even in School, No one asked 'How much you learned?'\"\n"
-    printf "${ITALIC_CYAN}\t\"Just ask 'How much marks you got?'.\"\n"
-    printf "${ITALIC_YELLOW}\t— farzi\n${RESET}\n"
+printf "${ITALIC_CYAN}\t\"Everything ends, end is ...prepare\"\n"
+    printf "${ITALIC_YELLOW}\t— kise\n${RESET}\n"
     printf "${ITALIC_RED}\t%d days --> '%s'${RESET}\n" "$DAYS_REMAINING" "$PRETTY_DATE"
 }
 
