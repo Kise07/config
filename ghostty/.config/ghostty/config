@@ -1,7 +1,7 @@
 # Ghostty Configuration
 
 # Font settings
-font-family = MesloLGS Nerd Font
+font-family = MesloLGS Nerd Font Mono
 font-size = 14
 
 # Window settings
