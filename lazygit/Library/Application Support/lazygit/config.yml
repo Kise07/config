@@ -1,0 +1,49 @@
+# ─────────────────────────────────────────────────────────────────────
+# LazyGit — Catppuccin Mocha
+#
+# Why this file exists:
+#   LazyGit is a self-contained TUI. Unlike fzf/floax (which inherit the
+#   terminal's ANSI palette) LazyGit paints its own colors and does NOT
+#   read Ghostty's theme at all. With an empty config it falls back to its
+#   factory default (blue/green/gray), which is why it looked out of place
+#   next to SessionX/FloaX. These values pin it to the same Mocha palette
+#   Ghostty is using so every surface matches.
+#
+# Why this path (~/.local/share/.../Application Support) instead of
+# ~/.config/lazygit:
+#   On macOS LazyGit does not use the XDG config dir — it reads
+#   "~/Library/Application Support/lazygit/config.yml" only. Stow is
+#   pointed at $HOME (see .stowrc), so shipping the Library/ tree here
+#   symlinks directly to the one file LazyGit actually opens.
+# ─────────────────────────────────────────────────────────────────────
+
+gui:
+  # Catppuccin Mocha palette (same base as Ghostty / tmux / SketchyBar)
+  #   base    #1e1e2e  surface0 #313244  surface1 #45475a
+  #   overlay #6c7086  subtext  #a6adc8  text     #cdd6f4
+  #   mauve   #cba6f7  blue     #89b4fa  peach    #fab387
+  #   red     #f38ba8
+  theme:
+    activeBorderColor:
+      - "#cba6f7"
+      - bold
+    inactiveBorderColor:
+      - "#a6adc8"
+    searchingActiveBorderColor:
+      - "#89b4fa"
+      - bold
+    selectedLineBgColor:
+      - "#313244"
+    cherryPickedCommitBgColor:
+      - "#45475a"
+    cherryPickedCommitFgColor:
+      - "#fab387"
+    unstagedChangesColor:
+      - "#f38ba8"
+
+  # Show a colored dot on modified files / full width panels that read more
+  # like the rest of the stack.
+  showFileTree: true
+  showListScrollBars: false
+  nerdFontsVersion: "3"
+  promptToReturnFromSubprocess: false
