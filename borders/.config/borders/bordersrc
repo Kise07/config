@@ -1,0 +1,27 @@
+#!/bin/sh
+# ── JankyBorders ─────────────────────────────────────────────────────
+# Executed automatically by the borders service when launched with no args
+# (see: man borders — "we try to execute a file at ~/.config/borders/bordersrc").
+# Started via: brew services start borders
+#
+# Deliberately no arrays / no $'…' escapes — this must work under /bin/sh,
+# which is no longer bash on macOS.
+
+# style=round           rounded corners, matching SketchyBar's corner_radius
+# width=6.0             border thickness in points
+# hidpi=on              retina rendering
+# active_color          Catppuccin Mocha mauve   — focused window
+# inactive_color        Catppuccin Mocha surface1 — dim border on the rest
+#
+# ax_focus is intentionally NOT set here. It must be left out because borders
+# has no Accessibility permission yet — forcing ax_focus=on makes borders exit
+# immediately ("must be trusted with accessibility permissions"). Per man
+# borders, ax_focus is *enabled automatically* once the process is trusted, so
+# it turns itself on after you add borders in
+# System Settings → Privacy & Security → Accessibility.
+
+borders style=round \
+        width=6.0 \
+        hidpi=on \
+        active_color=0xffcba6f7 \
+        inactive_color=0xff45475a
