@@ -12,10 +12,7 @@ font-size = 14
 cursor-style = block
 
 # Colors and appearance
-background = #1e1e2e
-foreground = #cdd6f4
-selection-background = #45475a
-selection-foreground = #f38ba8
+theme = Catppuccin Mocha
 
 # Option key as Meta (for tmux floax, emacs, vim Meta bindings)
 macos-option-as-alt = true
