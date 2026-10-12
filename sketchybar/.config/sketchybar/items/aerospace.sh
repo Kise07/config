@@ -9,7 +9,10 @@
 
 sketchybar --add event aerospace_workspace_change
 
-WORKSPACES=(1 2 3 4 5 6 7 8 9)
+# Workspaces shown as pills. Must match aerospace.toml's
+# `persistent-workspaces` — the plugin derives everything from the sid, so
+# this list is the single place that decides how many pills appear.
+WORKSPACES=(1 2 3 4 5)
 
 for sid in "${WORKSPACES[@]}"; do
   sketchybar --add item space.$sid left                            \
