@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# ──────────────────────────────────────────────────────────────────
+# SketchyBar — based on Josean's setup, adapted for AeroSpace.
+# Bar itself: AeroSpace owns window management; SketchyBar only draws.
+# ──────────────────────────────────────────────────────────────────
+
+CONFIG_DIR="$HOME/.config/sketchybar"
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors + icons
+
+##### Bar Appearance #####
+# https://felixkratz.github.io/SketchyBar/config/bar
+sketchybar --bar height=37        \
+                 blur_radius=30   \
+                 position=top     \
+                 sticky=off       \
+                 padding_left=10  \
+                 padding_right=10 \
+                 color=$BAR_COLOR
+
+##### Changing Defaults #####
+# https://felixkratz.github.io/SketchyBar/config/items
+sketchybar --default icon.font="MesloLGS Nerd Font:Bold:16.0"   \
+                     icon.color=$WHITE                          \
+                     label.font="MesloLGS Nerd Font:Bold:14.0"  \
+                     label.color=$WHITE                         \
+                     background.color=$ITEM_BG_COLOR            \
+                     background.corner_radius=5                 \
+                     background.height=24                       \
+                     padding_left=5                             \
+                     padding_right=5                            \
+                     label.padding_left=4                       \
+                     label.padding_right=10                     \
+                     icon.padding_left=10                       \
+                     icon.padding_right=4
+
+# -- Left Side Items --
+source "$ITEM_DIR/aerospace.sh"   # AeroSpace workspaces (replaces yabai spaces)
+source "$ITEM_DIR/front_app.sh"
+
+# -- Centered Items --
+# Sourced here (not in "Right Side") so its position stays explicit.
+source "$ITEM_DIR/media.sh"
+
+# -- Right Side Items --
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/cpu.sh"
+
+##### Finalizing Setup #####
+# Forces all scripts to run once on first load. Never call from an item script.
+sketchybar --update
