@@ -1,3 +1,7 @@
 # Local diagnostic helper — not part of the theme stack.
 # Requires macOS Screen Recording permission to sample popup pixels.
 bin/measure-popup
+
+# tmux plugin manager (TPM) clones these at runtime — vendored third-party
+# code, not our config. ~50M.
+tmux/.config/tmux/plugins/
