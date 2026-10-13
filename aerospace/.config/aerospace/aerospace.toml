@@ -60,6 +60,8 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# mouse follows focus when focused window changes
+on-focus-changed = 'move-mouse window-lazy-center'
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -73,13 +75,7 @@ automatically-unhide-macos-hidden-apps = false
 # Only workspaces 1-5 exist. This is what makes 6-9 and A-Z stop being
 # real workspaces — without it, empty higher workspaces stay alive invisibly
 # (and would still show up in `aerospace list-workspaces --all`).
-persistent-workspaces = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-]
+persistent-workspaces = ["1", "2", "3", "4", "5"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -176,6 +172,9 @@ alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-4 = 'move-node-to-workspace 4'
 alt-shift-5 = 'move-node-to-workspace 5'
+
+# focus window to full-screen
+alt-shift-f = 'fullscreen'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
