@@ -7,11 +7,20 @@
 # Deliberately no arrays / no $'…' escapes — this must work under /bin/sh,
 # which is no longer bash on macOS.
 
+# ── Colours ──────────────────────────────────────────────────────────
+# ONE source of truth, shared with the bar: ~/.config/sketchybar/colors.sh
+# Edit that file (uncomment a scheme block), then reload bar + border:
+#     sketchybar --reload
+#     pkill -x borders && /opt/homebrew/bin/borders &
+#
+# Josean-style flat exports. borders consumes two of them:
+#   ACCENT_COLOR        focused window border   (Catppuccin Mocha mauve)
+#   BORDER_INACTIVE     unfocused windows       (Catppuccin Mocha surface1)
+. "${HOME}/.config/sketchybar/colors.sh"
+
 # style=round           rounded corners, matching SketchyBar's corner_radius
 # width=6.0             border thickness in points
 # hidpi=on              retina rendering
-# active_color          Catppuccin Mocha mauve   — focused window
-# inactive_color        Catppuccin Mocha surface1 — dim border on the rest
 #
 # ax_focus is intentionally NOT set here. It must be left out because borders
 # has no Accessibility permission yet — forcing ax_focus=on makes borders exit
@@ -23,5 +32,5 @@
 borders style=round \
         width=6.0 \
         hidpi=on \
-        active_color=0xffcba6f7 \
-        inactive_color=0xff45475a
+        active_color="${ACCENT_COLOR}" \
+        inactive_color="${BORDER_INACTIVE}"
