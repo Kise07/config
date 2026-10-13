@@ -243,6 +243,11 @@ alias tr='tmux rename-session -t'
 alias td='tmux detach-client'
 
 # ============================================
+# Sketchy + Border reload aliases
+# ============================================
+alias restheme='sketchybar --reload && pkill -x borders; /opt/homebrew/bin/borders &'
+
+# ============================================
 # ZOXIDE - Smart cd
 # ============================================
 
