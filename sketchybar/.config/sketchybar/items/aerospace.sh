@@ -19,9 +19,9 @@ for sid in "${WORKSPACES[@]}"; do
              --subscribe space.$sid aerospace_workspace_change     \
              --set space.$sid                                      \
                    icon="$sid"                                     \
-                   icon.color=$ACCENT_COLOR                        \
+                   icon.color=$WHITE                               \
                    label.font="sketchybar-app-font:Regular:16.0"   \
-                   label.color=$ACCENT_COLOR                       \
+                   label.color=$SUBTEXT                            \
                    label.padding_right=20                          \
                    label.y_offset=-1                               \
                    background.color=$ACCENT_COLOR                  \
@@ -31,10 +31,12 @@ for sid in "${WORKSPACES[@]}"; do
                    script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
-# Decorative separator between the workspaces and the front-app item
+# Decorative separator between the workspaces and the front-app item.
+# Neutral SUBTEXT (was accent): on the reference bar nothing except the
+# focused workspace pill carries colour on the left side.
 sketchybar --add item space_separator left                         \
            --set space_separator icon="$ICON_SEPARATOR"            \
-                                 icon.color=$ACCENT_COLOR          \
+                                 icon.color=$SUBTEXT               \
                                  icon.padding_left=14              \
                                  icon.padding_right=14             \
                                  label.drawing=off                 \

@@ -13,13 +13,19 @@ NAME="space.$SID"
 FOCUS="${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused 2>/dev/null)}"
 
 if [ "$SID" = "$FOCUS" ]; then
+  # Focused: filled accent pill, dark text on top (the only coloured element
+  # on the left — matches the reference bar where just the active workspace
+  # is highlighted and every other item stays neutral).
   sketchybar --set "$NAME" background.drawing=on \
                            icon.color=$BAR_COLOR \
                            label.color=$BAR_COLOR
 else
+  # Unfocused: NO background, number in bright white and the app-icon strip
+  # muted to SUBTEXT — reference-style hierarchy where the eye lands on the
+  # focused pill first instead of a row of accent-coloured numbers.
   sketchybar --set "$NAME" background.drawing=off \
-                           icon.color=$ACCENT_COLOR \
-                           label.color=$ACCENT_COLOR
+                           icon.color=$WHITE \
+                           label.color=$SUBTEXT
 fi
 
 # App icons for the windows currently in this workspace

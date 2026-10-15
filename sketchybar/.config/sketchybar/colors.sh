@@ -8,17 +8,17 @@
 # this file). Ghostty and everything drawn INSIDE the terminal stay on Mocha
 # by design — only the bar and the border follow what you pick here.
 
-# ── Oscura Midnight ◀ ACTIVE ───────────────────────────────────────────────
-export BAR_COLOR=0xff050508
-export ITEM_BG_COLOR=0xff232323
-export ACCENT_COLOR=0xff54c0a3
-export BORDER_INACTIVE=0xff2c2c31
+# ── Oscura Midnight ─────────────────────────────────────────────────────────
+# export BAR_COLOR=0xff050508
+# export ITEM_BG_COLOR=0xff232323
+# export ACCENT_COLOR=0xff54c0a3
+# export BORDER_INACTIVE=0xff2c2c31
 
-# ── Catppuccin Mocha ───────────────────────────────────────────────────────
-# export BAR_COLOR=0xff181825
-# export ITEM_BG_COLOR=0xff313244
-# export ACCENT_COLOR=0xffcba6f7
-# export BORDER_INACTIVE=0xff45475a
+# ── Catppuccin Mocha ◀ ACTIVE ───────────────────────────────────────────────
+export BAR_COLOR=0xff181825
+export ITEM_BG_COLOR=0xff313244
+export ACCENT_COLOR=0xffcba6f7
+export BORDER_INACTIVE=0xff45475a
 
 # ── Josean: Teal ───────────────────────────────────────────────────────────
 # export BAR_COLOR=0xff001f30

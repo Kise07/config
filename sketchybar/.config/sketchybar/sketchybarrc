@@ -13,21 +13,42 @@ source "$CONFIG_DIR/colors.sh" # Loads all defined colors + icons
 
 ##### Bar Appearance #####
 # https://felixkratz.github.io/SketchyBar/config/bar
+#
+# The bar background is TRANSPARENT (alpha 00) so only the pills remain,
+# floating over the wallpaper — the Omarchy-style look.
+#
+# The RGB is deliberately kept as $BAR_COLOR's RGB (050508) rather than a
+# bare 0x00000000: blur_radius=30 still tints off it, so the frosted edge
+# matches the active scheme instead of going neutral black.
+#
+# NOTE: $BAR_COLOR itself is left UNCHANGED in colors.sh. It is not only
+# the bar background — front_app and the workspace pills use it as the
+# TEXT colour inside their accent-coloured pills. Zeroing its alpha would
+# make that text vanish too.
 sketchybar --bar height=37        \
                  blur_radius=30   \
                  position=top     \
                  sticky=off       \
                  padding_left=10  \
                  padding_right=10 \
-                 color=$BAR_COLOR
+                 color=0x00050508
 
 ##### Changing Defaults #####
 # https://felixkratz.github.io/SketchyBar/config/items
+# PLAIN-TEXT STYLE: no item draws its own background — status items are bare
+# icon+label floating on the transparent bar (the discussion-47 look).
+# background.drawing=off as the default replaces the old solid grey pill
+# (background.color=$ITEM_BG_COLOR), which read as heavy dark blocks once
+# the bar itself went transparent.
+#
+# background.height/corner_radius stay: they are dormant while drawing is
+# off, and only shape the focused-workspace pill, which plugins/aerospace.sh
+# re-enables with background.drawing=on (accent fill, dark text on top).
 sketchybar --default icon.font="MesloLGS Nerd Font:Bold:16.0"   \
                      icon.color=$WHITE                          \
                      label.font="MesloLGS Nerd Font:Bold:14.0"  \
                      label.color=$WHITE                         \
-                     background.color=$ITEM_BG_COLOR            \
+                     background.drawing=off                     \
                      background.corner_radius=5                 \
                      background.height=24                       \
                      padding_left=5                             \
