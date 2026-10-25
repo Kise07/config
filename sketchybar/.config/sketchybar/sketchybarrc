@@ -61,8 +61,12 @@ source "$ITEM_DIR/spaces.sh"
 # Right
 # Volume + CPU (ours, restored: his items/cpu.sh drives the compiled C
 # helper, which mach_helper never spawns on this box — shell plugins work)
-source "$ITEM_DIR/volume.sh"
+# Order matters: in the right strip the first-sourced `right` item lands at
+# the BOTTOM of the stack. So: clock first (bottom), cpu above it, volume on
+# top of the bottom group.
+source "$ITEM_DIR/clock.sh"
 source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/volume.sh"
 
 # No clock pill — tmux already shows the time. His items/calendar.sh (the
 # pill) + helper/clock.h (what fills it) stay in the repo, unplayed.
