@@ -1,77 +1,74 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-# ──────────────────────────────────────────────────────────────────
-# SketchyBar — based on Josean's setup, adapted for AeroSpace.
-# Bar itself: AeroSpace owns window management; SketchyBar only draws.
-# ──────────────────────────────────────────────────────────────────
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
 
-CONFIG_DIR="$HOME/.config/sketchybar"
-PLUGIN_DIR="$CONFIG_DIR/plugins"
-ITEM_DIR="$CONFIG_DIR/items"
+ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins" # Directory where all the plugin scripts are stored
 
-source "$CONFIG_DIR/colors.sh" # Loads all defined colors + icons
+# Compiled C helper (helper/makefile, `cd helper && make`) that serves the
+# clock/cpu updates over XPC instead of spawning a shell per tick.
+# items/cpu.sh and items/calendar.sh reference it via mach_helper.
+HELPER="$HOME/.config/sketchybar/helper/helper"
 
-##### Bar Appearance #####
-# https://felixkratz.github.io/SketchyBar/config/bar
-#
-# The bar background is TRANSPARENT (alpha 00) so only the pills remain,
-# floating over the wallpaper — the Omarchy-style look.
-#
-# The RGB is deliberately kept as $BAR_COLOR's RGB (050508) rather than a
-# bare 0x00000000: blur_radius=30 still tints off it, so the frosted edge
-# matches the active scheme instead of going neutral black.
-#
-# NOTE: $BAR_COLOR itself is left UNCHANGED in colors.sh. It is not only
-# the bar background — front_app and the workspace pills use it as the
-# TEXT colour inside their accent-coloured pills. Zeroing its alpha would
-# make that text vanish too.
-sketchybar --bar height=37        \
-                 blur_radius=30   \
-                 position=top     \
-                 sticky=off       \
-                 padding_left=10  \
-                 padding_right=10 \
-                 color=0x00050508
+FONT="SF Pro Text" # Real family name on this Mac (SF Pro Display/Text/Rounded are the installed ones; bare "SF Pro" silently falls back to Helvetica)
+SPACE_CLICK_SCRIPT="yabai -m space --focus \$SID 2>/dev/null" # The script that is run for clicking on space components
 
-##### Changing Defaults #####
-# https://felixkratz.github.io/SketchyBar/config/items
-# PLAIN-TEXT STYLE: no item draws its own background — status items are bare
-# icon+label floating on the transparent bar (the discussion-47 look).
-# background.drawing=off as the default replaces the old solid grey pill
-# (background.color=$ITEM_BG_COLOR), which read as heavy dark blocks once
-# the bar itself went transparent.
-#
-# background.height/corner_radius stay: they are dormant while drawing is
-# off, and only shape the focused-workspace pill, which plugins/aerospace.sh
-# re-enables with background.drawing=on (accent fill, dark text on top).
-sketchybar --default icon.font="MesloLGS Nerd Font:Bold:16.0"   \
-                     icon.color=$WHITE                          \
-                     label.font="MesloLGS Nerd Font:Bold:14.0"  \
-                     label.color=$WHITE                         \
-                     background.drawing=off                     \
-                     background.corner_radius=5                 \
-                     background.height=24                       \
-                     padding_left=5                             \
-                     padding_right=5                            \
-                     label.padding_left=4                       \
-                     label.padding_right=10                     \
-                     icon.padding_left=10                       \
-                     icon.padding_right=4
+PADDINGS=3 # All paddings use this value (icon, label, background)
 
-# -- Left Side Items --
-source "$ITEM_DIR/aerospace.sh"   # AeroSpace workspaces (replaces yabai spaces)
-source "$ITEM_DIR/front_app.sh"
+POPUP_BORDER_WIDTH=2
+POPUP_CORNER_RADIUS=11
 
-# -- Centered Items --
-# Sourced here (not in "Right Side") so its position stays explicit.
-source "$ITEM_DIR/media.sh"
+SHADOW=on
 
-# -- Right Side Items --
-source "$ITEM_DIR/calendar.sh"
+# Setting up the general bar appearance and default values
+sketchybar --bar     height=50                                         \
+                     color=$BAR_COLOR                                  \
+                     shadow=$SHADOW                                    \
+                     position=right                                     \
+                     sticky=on                                         \
+                     padding_right=18                                  \
+                     padding_left=18                                   \
+                     corner_radius=9                                   \
+                     y_offset=10                                       \
+                     margin=10                                         \
+                     blur_radius=20                                    \
+                                                                       \
+           --default updates=when_shown                                \
+                     icon.font="$FONT:Bold:14.0"                       \
+                     icon.color=$ICON_COLOR                            \
+                     icon.padding_left=$PADDINGS                       \
+                     icon.padding_right=$PADDINGS                      \
+                     label.font="$FONT:Semibold:13.0"                  \
+                     label.color=$LABEL_COLOR                          \
+                     label.padding_left=$PADDINGS                      \
+                     label.padding_right=$PADDINGS                     \
+                     background.padding_right=$PADDINGS                \
+                     background.padding_left=$PADDINGS                 \
+                     popup.background.border_width=2                   \
+                     popup.background.corner_radius=11                 \
+                     popup.background.border_color=$POPUP_BORDER_COLOR \
+                     popup.background.color=$POPUP_BACKGROUND_COLOR    \
+                     popup.background.shadow.drawing=$SHADOW
+
+# Left
+source "$ITEM_DIR/apple.sh"
+source "$ITEM_DIR/spaces.sh"
+
+# Center
+# source "$ITEM_DIR/spotify.sh"
+
+# Right
+# Volume + CPU (ours, restored: his items/cpu.sh drives the compiled C
+# helper, which mach_helper never spawns on this box — shell plugins work)
 source "$ITEM_DIR/volume.sh"
-source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/cpu.sh"
 
-##### Finalizing Setup #####
-# Forces all scripts to run once on first load. Never call from an item script.
+# No clock pill — tmux already shows the time. His items/calendar.sh (the
+# pill) + helper/clock.h (what fills it) stay in the repo, unplayed.
+# source "$ITEM_DIR/calendar.sh"
+
+############## FINALIZING THE SETUP ##############
 sketchybar --update
+
+echo "sketchybar configuation loaded.."

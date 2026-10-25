@@ -7,27 +7,24 @@
 config-version = 2
 
 # ── SketchyBar + JankyBorders lifecycle ─────────────────────────────
-# Start the menu bar and the focus border together with AeroSpace, instead
-# of running them as launchd `brew services` (which start at login and
-# outlive the window manager). helpers.sh also kills both again when
-# AeroSpace quits, so nothing runs when the WM isn't running.
+# AeroSpace starts NOTHING but itself. The bar and the focus border are
+# started on demand by the user:
+#     brew services start sketchybar
+#     brew services start borders
+# and stopped the same way. Nothing runs in the background when they are
+# not wanted.
 #
-# NOTE: absolute path on purpose — AeroSpace does not expand ~ or $HOME
-# inside exec-and-forget.
-after-startup-command = [
-  'exec-and-forget /bin/bash /Users/kise/.config/aerospace/helpers.sh',
-]
-
 # ── SketchyBar workspace notifications ───────────────────────────────
 # Fires on every workspace switch so the bar can redraw the focus pill.
+# The `pgrep` guard keeps AeroSpace from spawning a sketchybar process of
+# its own when the bar isn't running — `sketchybar --trigger` talks to the
+# running daemon, so there is nothing to notify while it's down.
 # Deliberately a SINGLE bash -c string: argv elements after this one would
-# be handed to bash as $0 and silently never executed (the old
-# `exec-and-forget borders … width=0` line was broken exactly that way).
-# JankyBorders is managed by helpers.sh instead.
+# be handed to bash as $0 and silently never executed.
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+  'pgrep -x sketchybar >/dev/null 2>&1 && sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -100,12 +97,14 @@ gaps.inner.horizontal = 10
 gaps.inner.vertical = 10
 gaps.outer.left = 10
 gaps.outer.bottom = 10
-# Top gap = SketchyBar height (37) + the normal outer gap (10), so tiled
-# windows sit below the bar instead of underneath it. If you change the bar
-# height in ~/.config/sketchybar/sketchybarrc (sketchybar --bar height=...),
+# The bar lives on the RIGHT edge (position=right in sketchybarrc), so the
+# top gap is a plain 10 — no reservation needed up there. The reservation
+# moved to the right: sketchybar --bar height=50 margin=10 occupies the
+# rightmost 60px, so outer.right has to clear that plus the usual 10px.
+# If you change height/margin in ~/.config/sketchybar/sketchybarrc,
 # change this number to match.
-gaps.outer.top = 47
-gaps.outer.right = 10
+gaps.outer.top = 10
+gaps.outer.right = 70
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

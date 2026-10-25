@@ -5,3 +5,6 @@ bin/measure-popup
 # tmux plugin manager (TPM) clones these at runtime — vendored third-party
 # code, not our config. ~50M.
 tmux/.config/tmux/plugins/
+
+# built XPC helper binary (helper/makefile)
+sketchybar/.config/sketchybar/helper/helper
