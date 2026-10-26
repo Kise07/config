@@ -54,6 +54,8 @@ sketchybar --bar     height=50                                         \
 # Left
 source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
+# straight after spaces.sh so the front-app glyph lands BELOW the chevron
+source "$ITEM_DIR/app.sh"
 
 # Center
 # source "$ITEM_DIR/spotify.sh"
