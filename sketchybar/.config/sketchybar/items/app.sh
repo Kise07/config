@@ -12,7 +12,8 @@ sketchybar --add item front_app left                                    \
            --set front_app script="$PLUGIN_DIR/front_app.sh"            \
                            icon.font="sketchybar-app-font:Regular:16.0" \
                            icon.color=$WHITE                            \
+                           icon.align=center                            \
                            label.drawing=off                            \
                            background.padding_left=8                    \
                            background.padding_right=8                   \
-           --subscribe front_app front_app_switched
+           --subscribe front_app front_app_switched aerospace_workspace_change
