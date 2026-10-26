@@ -62,9 +62,10 @@ source "$ITEM_DIR/spaces.sh"
 # Volume + CPU (ours, restored: his items/cpu.sh drives the compiled C
 # helper, which mach_helper never spawns on this box — shell plugins work)
 # Order matters: in the right strip the first-sourced `right` item lands at
-# the BOTTOM of the stack. So: clock first (bottom), cpu above it, volume on
-# top of the bottom group.
+# the BOTTOM of the stack. So: clock first (bottom), then battery, cpu and
+# volume stacked above it.
 source "$ITEM_DIR/clock.sh"
+source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/cpu.sh"
 source "$ITEM_DIR/volume.sh"
 

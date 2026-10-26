@@ -15,6 +15,7 @@ if [ "$SENDER" = "volume_change" ]; then
     *)                ICON="$ICON_VOL_MUTE" ;;
   esac
 
-  # Icon only: items/volume.sh turns label.drawing off, so no "NN%" here.
-  sketchybar --set "$NAME" icon="$ICON"
+  # Level glyph + percentage (items/volume.sh pins the small icon font so
+  # a 3-digit readout still fits the 50px strip).
+  sketchybar --set "$NAME" icon="$ICON" label="${VOLUME}%"
 fi

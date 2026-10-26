@@ -32,3 +32,6 @@ export ICON_VOL_MED=
 export ICON_VOL_LOW=
 export ICON_VOL_MUTE=
 export ICON_CPU=
+
+# --- Battery glyph: U+26A1 lightning (in the Nerd Font, so monochrome) ---
+export ICON_BAT="⚡"   # U+26A1 high-voltage (oct-zap in the Nerd Font)
