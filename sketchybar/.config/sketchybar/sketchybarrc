@@ -3,8 +3,42 @@
 source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors
 source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
 
+CONFIG_DIR="${CONFIG_DIR:-$HOME/.config/sketchybar}"
 ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins" # Directory where all the plugin scripts are stored
+
+# ── Layout: vertical right strip <-> horizontal top bar ────────────────
+# The one-line state file $CONFIG_DIR/.layout ("vertical" | "horizontal") is
+# written by layout.sh — run `layout.sh horizontal`, `layout.sh vertical` or
+# `layout.sh toggle`, it restarts the bar (launchd KeepAlive) and rewrites the
+# matching AeroSpace gaps.
+#
+# Why every direction-specific number lives HERE: SketchyBar flows `left`
+# items top->bottom in a right strip but left->right in a top bar, and the
+# padding semantics follow the flow — background.padding_* is always the gap
+# BETWEEN items, icon.padding_* always the position INSIDE the item. So the
+# only thing that really changes is how wide each item wants to be:
+#   vertical   digit slot padded to 22+22 so the pill spans the 50px strip
+#   horizontal digit slot padded to 9+9  -> ~26px wide pills in a 40px bar
+# Items below only read these variables; nothing else is orientation-aware.
+LAYOUT=$(cat "$CONFIG_DIR/.layout" 2>/dev/null)
+case "$LAYOUT" in
+  horizontal)
+    BAR_POSITION=top
+    BAR_HEIGHT=40          # stat pills are 26 tall, centred (background.c
+    BAR_MARGIN=0           #  origin.y = y - height/2) -> 7px above/below
+    BAR_Y_OFFSET=0         # flush with the top edge; menu bar is hidden
+    SPACE_PAD=9            # workspace digit padding -> ~26px pills
+    ;;
+  *)
+    LAYOUT=vertical
+    BAR_POSITION=right
+    BAR_HEIGHT=50
+    BAR_MARGIN=10          # 10px inset from the right edge
+    BAR_Y_OFFSET=10
+    SPACE_PAD=22           # pads each row to the full strip width
+    ;;
+esac
 
 # Compiled C helper (helper/makefile, `cd helper && make`) that serves the
 # clock/cpu updates over XPC instead of spawning a shell per tick.
@@ -22,16 +56,16 @@ POPUP_CORNER_RADIUS=11
 SHADOW=on
 
 # Setting up the general bar appearance and default values
-sketchybar --bar     height=50                                         \
+sketchybar --bar     height=$BAR_HEIGHT                                \
                      color=$BAR_COLOR                                  \
                      shadow=$SHADOW                                    \
-                     position=right                                     \
+                     position=$BAR_POSITION                            \
                      sticky=on                                         \
                      padding_right=18                                  \
                      padding_left=18                                   \
                      corner_radius=9                                   \
-                     y_offset=10                                       \
-                     margin=10                                         \
+                     y_offset=$BAR_Y_OFFSET                            \
+                     margin=$BAR_MARGIN                                \
                      blur_radius=20                                    \
                                                                        \
            --default updates=when_shown                                \

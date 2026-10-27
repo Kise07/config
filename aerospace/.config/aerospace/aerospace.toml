@@ -97,12 +97,15 @@ gaps.inner.horizontal = 10
 gaps.inner.vertical = 10
 gaps.outer.left = 10
 gaps.outer.bottom = 10
-# The bar lives on the RIGHT edge (position=right in sketchybarrc), so the
-# top gap is a plain 10 — no reservation needed up there. The reservation
-# moved to the right: sketchybar --bar height=50 margin=10 occupies the
-# rightmost 60px, so outer.right has to clear that plus the usual 10px.
-# If you change height/margin in ~/.config/sketchybar/sketchybarrc,
-# change this number to match.
+# Bar reservation — layout.sh OWNS the next two lines. It rewrites them
+# whenever you flip the SketchyBar orientation
+# (~/.config/sketchybar/layout.sh vertical|horizontal|toggle), so don't
+# hand-edit the numbers:
+#   vertical   -> right strip: height=50 margin=10 sits in the rightmost
+#                 60px, so outer.right clears that plus the usual 10px,
+#                 outer.top stays a plain 10.
+#   horizontal -> top bar: height=40 margin=0 covers the topmost 40px,
+#                 so outer.top = 40 + 10, outer.right a plain 10.
 gaps.outer.top = 10
 gaps.outer.right = 70
 
