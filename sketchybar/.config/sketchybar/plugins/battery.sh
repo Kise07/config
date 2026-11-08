@@ -10,7 +10,7 @@
 CONFIG_DIR="${CONFIG_DIR:-$HOME/.config/sketchybar}"
 source "$CONFIG_DIR/colors.sh"
 
-LINE=$(pmset -g batt | grep -E 'InternalBattery|Battery' | head -1)
+LINE=$(pmset -g batt | grep 'InternalBattery' | head -1)
 PCT=$(printf '%s' "$LINE" | grep -Eo '[0-9]+%' | tr -d '%' | head -1)
 [ -n "$PCT" ] || PCT=0
 
