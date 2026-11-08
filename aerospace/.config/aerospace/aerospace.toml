@@ -106,8 +106,8 @@ gaps.outer.bottom = 10
 #                 outer.top stays a plain 10.
 #   horizontal -> top bar: height=40 margin=0 covers the topmost 40px,
 #                 so outer.top = 40 + 10, outer.right a plain 10.
-gaps.outer.top = 10
-gaps.outer.right = 70
+gaps.outer.top = 50
+gaps.outer.right = 10
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
