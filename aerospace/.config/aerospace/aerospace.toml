@@ -14,18 +14,24 @@ config-version = 2
 # and stopped the same way. Nothing runs in the background when they are
 # not wanted.
 #
-# ── SketchyBar workspace notifications ───────────────────────────────
-# Fires on every workspace switch so the bar can redraw the focus pill.
-# The `pgrep` guard keeps AeroSpace from spawning a sketchybar process of
-# its own when the bar isn't running — `sketchybar --trigger` talks to the
-# running daemon, so there is nothing to notify while it's down.
-# Deliberately a SINGLE bash -c string: argv elements after this one would
-# be handed to bash as $0 and silently never executed.
-exec-on-workspace-change = [
-  '/bin/bash',
-  '-c',
-  'pgrep -x sketchybar >/dev/null 2>&1 && sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
-]
+# ── Lifecycle (SketchyBar DISABLED) ─────────────────────────────────
+# Only AeroSpace + JankyBorders are used now; SketchyBar is uninstalled.
+# AeroSpace still starts NOTHING but itself — the border is started on
+# demand:      brew services start borders
+# and stopped the same way.
+#
+# ── SketchyBar workspace notifications (DISABLED) ───────────────────
+# Kept for reference. While the bar runs, this fires on every workspace
+# switch so it can redraw the focus pill; the pgrep guard makes it a no-op
+# when the bar is down.
+# TO RE-ENABLE THE BAR: install sketchybar, start its service, then
+# uncomment the block below and run layout.sh (it restores the top gap).
+#
+# exec-on-workspace-change = [
+#   '/bin/bash',
+#   '-c',
+#   'pgrep -x sketchybar >/dev/null 2>&1 && sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+# ]
 
 # Start AeroSpace at login
 start-at-login = false
@@ -97,16 +103,15 @@ gaps.inner.horizontal = 10
 gaps.inner.vertical = 10
 gaps.outer.left = 10
 gaps.outer.bottom = 10
-# Bar reservation — layout.sh OWNS the next two lines. It rewrites them
-# whenever you flip the SketchyBar orientation
-# (~/.config/sketchybar/layout.sh vertical|horizontal|toggle), so don't
-# hand-edit the numbers:
-#   vertical   -> right strip: height=50 margin=10 sits in the rightmost
-#                 60px, so outer.right clears that plus the usual 10px,
-#                 outer.top stays a plain 10.
-#   horizontal -> top bar: height=40 margin=0 covers the topmost 40px,
-#                 so outer.top = 40 + 10, outer.right a plain 10.
-gaps.outer.top = 50
+# Bar reservation — DISABLED while SketchyBar is uninstalled, so the top
+# edge gets the same plain 10px breathing room as every other edge.
+# When the bar is back, layout.sh OWNS these two lines and rewrites them
+# for the current orientation, then reloads AeroSpace:
+#   vertical   -> right strip: outer.top=10,  outer.right=70
+#   horizontal -> top bar:     outer.top=50,  outer.right=10
+# Re-enabling the bar therefore only needs: install + start the service,
+# then `~/.config/sketchybar/layout.sh horizontal` (or vertical/toggle).
+gaps.outer.top = 10
 gaps.outer.right = 10
 
 # 'main' binding mode declaration

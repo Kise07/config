@@ -245,7 +245,11 @@ alias td='tmux detach-client'
 # ============================================
 # Sketchy + Border reload aliases
 # ============================================
-alias restheme='sketchybar --reload && pkill -x borders; /opt/homebrew/bin/borders &'
+# restheme: re-apply colors.sh to the WINDOW BORDERS only.
+# SketchyBar is uninstalled, so the old `sketchybar --reload` step is gone;
+# borders has no reload signal (SIGHUP is fatal to it), hence the restart.
+# Re-add the bar half as `sketchybar --reload && ...` if the bar comes back.
+alias restheme='pkill -x borders; /opt/homebrew/bin/borders >/dev/null 2>&1 &'
 
 # ============================================
 # ZOXIDE - Smart cd

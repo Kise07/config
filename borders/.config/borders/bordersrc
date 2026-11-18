@@ -8,10 +8,12 @@
 # which is no longer bash on macOS.
 
 # ── Colours ──────────────────────────────────────────────────────────
-# ONE source of truth, shared with the bar: ~/.config/sketchybar/colors.sh
-# Edit that file (uncomment a scheme block), then reload bar + border:
-#     sketchybar --reload
+# ONE source of truth: ~/.config/sketchybar/colors.sh. The file still
+# lives in the sketchybar module even though the bar app is uninstalled —
+# the stowed config dir remains, which is what keeps this path valid.
+# Edit that file (uncomment a scheme block), then reload the border:
 #     pkill -x borders && /opt/homebrew/bin/borders &
+# (put `sketchybar --reload &&` back in front if the bar ever returns)
 #
 # Josean-style flat exports. borders consumes two of them:
 #   ACCENT_COLOR        focused window border   (Catppuccin Mocha mauve)
